@@ -13,8 +13,8 @@
             return params.get('apartment_id');
         }
 
-        // Function to make API POST call
-        function sendApiPostCall(apartmentId) {
+        // Function to make API POST call and redirect
+        function sendApiPostCallAndRedirect(apartmentId) {
             const apiUrl = 'https://events.sendpulse.com/events/id/4095f77f048e4252adb2c73767e22fda/8468664';
 
             // Make a POST request using Fetch API
@@ -45,9 +45,9 @@
             // Extract apartment_id from the URL
             const apartmentId = getApartmentId();
 
-            // Make API POST call with the extracted parameter
+            // Make API POST call and redirect with the extracted parameter
             if (apartmentId) {
-                sendApiPostCall(apartmentId);
+                sendApiPostCallAndRedirect(apartmentId);
             } else {
                 console.error('Apartment ID not provided in the URL.');
                 // Handle the case where apartment_id is not provided
@@ -56,4 +56,5 @@
     </script>
 </body>
 </html>
+
 
