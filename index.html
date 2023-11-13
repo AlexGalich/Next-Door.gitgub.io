@@ -11,7 +11,7 @@
         function getUrlParams() {
             const params = new URLSearchParams(window.location.search);
             return {
-                property_type: params.get('apartment_id')
+                apartment_id: params.get('apartment_id')
             };
         }
 
@@ -30,10 +30,10 @@
             .then(response => response.json())
             .then(responseData => {
                 // Extract necessary data from the response, adjust as needed
-                const { apartment_id, property_type } = responseData;
+                const { apartment_id} = responseData;
 
                 // Redirect to the next-door.com.ua website with the extracted parameters
-                const redirectUrl = `http://next-door.com.ua/uk/flats/view/SF-2-625-771`;
+                const redirectUrl = `http://next-door.com.ua/uk/flats/view/${apartment_id}`;
                 window.location.replace(redirectUrl);
             })
             .catch(error => {
