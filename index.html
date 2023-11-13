@@ -7,14 +7,16 @@
 </head>
 <body>
     <script>
-        // Function to extract the apartment_id parameter from the URL
-        function getApartmentId() {
+        // Function to extract parameters from the URL
+        function getUrlParams() {
             const params = new URLSearchParams(window.location.search);
-            return params.get('apartment_id');
+            return {
+                property_type: params.get('apartment_id')
+            };
         }
 
-        // Function to make API POST call and redirect
-        function sendApiPostCallAndRedirect(apartmentId) {
+        // Function to make API POST call
+        function sendApiPostCall(data) {
             const apiUrl = 'https://events.sendpulse.com/events/id/4095f77f048e4252adb2c73767e22fda/8468664';
 
             // Make a POST request using Fetch API
@@ -23,14 +25,14 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ apartment_id: apartmentId }),
+                body: JSON.stringify(data),
             })
             .then(response => response.json())
             .then(responseData => {
                 // Extract necessary data from the response, adjust as needed
-                const { apartment_id } = responseData;
+                const { apartment_id, property_type } = responseData;
 
-                // Redirect to the next-door.com.ua website with the extracted parameter
+                // Redirect to the next-door.com.ua website with the extracted parameters
                 const redirectUrl = `http://next-door.com.ua/uk/flats/view/SF-2-625-771`;
                 window.location.replace(redirectUrl);
             })
@@ -39,22 +41,16 @@
                 // Handle errors as needed
             });
         }
-
+        
         // Entry point
         document.addEventListener('DOMContentLoaded', function() {
-            // Extract apartment_id from the URL
-            const apartmentId = getApartmentId();
+            // Extract parameters from the URL
+            const urlParams = getUrlParams();
 
-            // Make API POST call and redirect with the extracted parameter
-            if (apartmentId) {
-                sendApiPostCallAndRedirect(apartmentId);
-            } else {
-                console.error('Apartment ID not provided in the URL.');
-                // Handle the case where apartment_id is not provided
-            }
+            // Make API POST call with extracted parameters
+            sendApiPostCall(urlParams);
         });
     </script>
 </body>
 </html>
-
 
