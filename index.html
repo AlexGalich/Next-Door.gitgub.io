@@ -14,6 +14,7 @@
             const propId = params.get('prop_id');
             const phone = params.get('phone');
             const email = params.get('email');
+            const chatbots_channel = 'tg';
 
             return { propType, propId, phone, email };
         }
@@ -31,8 +32,8 @@
                 body: JSON.stringify({
                     email: parameters.email,
                     phone: parameters.phone,
-                    property_type: parameters.propType,
                     property_id: parameters.propId,
+                    chatbots_channel: parameters.chatbots_channel
                 }),
             })
             .then(response => response.json())
