@@ -7,17 +7,22 @@
 </head>
 <body>
     <script>
-        // Function to extract parameters from the URL
-        function getUrlParams() {
+        // Function to extract the apartment_id parameter from the URL
+        function getApartmentId() {
             const params = new URLSearchParams(window.location.search);
-            return {
-                apartment_id: params.get('apartment_id')
-            };
+           
         }
 
-        // Function to make API POST call
-        function sendApiPostCall(data) {
-            const apiUrl = 'https://events.sendpulse.com/events/id/4095f77f048e4252adb2c73767e22fda/8468664';
+        // Function to make API POST call and redirect
+        function sendApiPostCallAndRedirect(apartmentId) {
+            const apiUrl = 'https://events.sendpulse.com/events/id/4095f77f048e4252adb2c73767e22fda/8468664/';
+
+
+            // Additional parameters
+            const email = 'shasha@galich.net';
+            const phone  = "+380687771334";
+            const apartment_id = "SF-2-693-295s";
+            const chatbots_channel = "tg"
 
             // Make a POST request using Fetch API
             fetch(apiUrl, {
@@ -25,15 +30,21 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify({
+    
+                    email: email,
+                    phone: phone,
+                    property_id: apartment_id,
+                    chatbots_channel: chatbots_channel // Assuming property_id is the same as apartment_id
+                }),
             })
             .then(response => response.json())
             .then(responseData => {
                 // Extract necessary data from the response, adjust as needed
-                const { apartment_id} = responseData;
+                const { apartment_id } = responseData;
 
-                // Redirect to the next-door.com.ua website with the extracted parameters
-                const redirectUrl = `http://next-door.com.ua/uk/flats/view/${apartment_id}`;
+                // Redirect to the next-door.com.ua website with the extracted parameter
+                const redirectUrl = `http://next-door.com.ua/uk/flats/view/${apartmentId}`;
                 window.location.replace(redirectUrl);
             })
             .catch(error => {
@@ -41,14 +52,18 @@
                 // Handle errors as needed
             });
         }
-        
+
         // Entry point
         document.addEventListener('DOMContentLoaded', function() {
-            // Extract parameters from the URL
-            const urlParams = getUrlParams();
-
-            // Make API POST call with extracted parameters
-            sendApiPostCall(urlParams);
+            // Extract apartment_id from the URL
+            const apartmentId = "SF-2-693-295";
+            // Make API POST call and redirect with the extracted parameter
+            if (apartmentId) {
+                sendApiPostCallAndRedirect(apartmentId);
+            } else {
+                console.error('Apartment ID not provided in the URL.');
+                // Handle the case where apartment_id is not provided
+            }
         });
     </script>
 </body>
